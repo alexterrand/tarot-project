@@ -1,0 +1,53 @@
+.
+├── architecture.txt
+├── backend
+│   ├── app
+│   │   ├── api
+│   │   │   └── endpoints.py
+│   │   ├── core
+│   │   │   └── config.py
+│   │   ├── main.py
+│   │   ├── models
+│   │   │   └── game.py
+│   │   └── services
+│   │       └── game_service.py
+│   ├── docker
+│   │   ├── backend
+│   │   │   └── Dockerfile
+│   │   └── docker-compose.yml
+│   ├── pygame_client
+│   │   ├── architecture.txt
+│   │   ├── main.py
+│   │   ├── services
+│   │   │   └── api_client.py
+│   │   └── ui
+│   │       ├── components
+│   │       │   ├── card.py
+│   │       │   ├── hand_display.py
+│   │       │   ├── player_display.py
+│   │       │   └── trick_display.py
+│   │       ├── game_ui.py
+│   │       ├── screens
+│   │       │   ├── error_screen.py
+│   │       │   ├── game_screen.py
+│   │       │   └── menu_screen.py
+│   │       └── utils
+│   │           └── table_layout.py
+│   ├── pyproject.toml
+│   ├── README.md
+│   ├── tarot_logic
+│   │   ├── card.py
+│   │   ├── deck.py
+│   │   ├── game_state.py
+│   │   ├── __init__.py
+│   │   ├── main.py
+│   │   ├── player.py
+│   │   ├── rules.py
+│   │   └── trick.py
+│   └── tests
+│       └── test_tarot_logic
+│           └── test_card.py
+├── frontend
+└── claude.md
+
+20 directories, 37 files
