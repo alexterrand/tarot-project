@@ -30,6 +30,7 @@ This project is a full implementation of the French Tarot card game (4-player ru
 3.  **Testing:** Any change to logic must be verified with `pytest`.
 4.  **Environment:** Do not modify files inside `tarot-env/`.
 5.  **Data First:** Every architectural decision regarding the game loop must consider how data will be extracted for the database (logs/training).
+6. **Langage:** All code and comment should be written in english
 
 ## Common Commands
 - **Install Dependencies:** `cd backend && uv sync`
@@ -50,12 +51,25 @@ This project is a full implementation of the French Tarot card game (4-player ru
 - Dockerisation
 
 ### V2 - Simple AI & Data (Current Focus)
-- Refactor to support multiple AI strategies (Strategy Pattern).
-- Implementation of distinct "Bot" classes.
-- Implement a first strategy called "bot-naive" that always played the stronger card autorized by tarot logic
-- Implement a second strategy called "bot-randow" that always played ramdomly a card autorized by tarot logic
-- Connection to Supabase for game logging.
-- Simulation module to run parallel AI-vs-AI games for performance benchmarking.
+**Bot Strategies** ✅
+- ✅ Strategy Pattern implementation for modular bot AI
+- ✅ `bot-naive`: Smart greedy strategy with special card handling (Petit, Excuse)
+- ✅ `bot-random`: Random legal card selection
+- ✅ Reusable helper module for special card logic
+- ✅ Comprehensive test suite (46 tests)
+
+**Data & Simulation**
+- ✅ **Supabase integration** (PostgreSQL for game logging):
+  - Schema: `games` (metadata) → `game_rounds` (contract, initial hands, dog) → `tricks` (cards played, winner) → `bot_decisions` (RL training data: hand, legal moves, card played)
+  - Logging: Batch write at game end (in-memory cache during play for performance)
+  - GameLoggerService: Separate middleware (doesn't pollute game logic)
+  - V1 ready: Works without bidding (placeholder contract)
+  - Pushed to remote (4 logical commits)
+- ⏳ **Simulation module** for AI-vs-AI benchmarking (IN PROGRESS):
+  - CLI script to run N games with configurable bot strategies
+  - SimulationService orchestrator for batch game execution
+  - Flexible strategy assignment per player
+  - Results: win rates, average scores, all logged to Supabase
 
 ### V3 - Simple Frontend
 - Web UI implementation (React/Next.js).
