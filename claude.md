@@ -65,11 +65,15 @@ This project is a full implementation of the French Tarot card game (4-player ru
   - GameLoggerService: Separate middleware (doesn't pollute game logic)
   - V1 ready: Works without bidding (placeholder contract)
   - Pushed to remote (4 logical commits)
-- ⏳ **Simulation module** for AI-vs-AI benchmarking (IN PROGRESS):
-  - CLI script to run N games with configurable bot strategies
+- ✅ **Simulation module** for AI-vs-AI benchmarking:
+  - CLI script (`scripts/simulate.py`) to run N games with configurable bot strategies
   - SimulationService orchestrator for batch game execution
-  - Flexible strategy assignment per player
-  - Results: win rates, average scores, all logged to Supabase
+  - Flexible strategy assignment per player (any combination of bot-naive/bot-random)
+  - Results: win counts, win rates, average tricks won (V0.5: counts tricks, not full Tarot scoring yet)
+  - All games logged to Supabase (non-blocking error handling)
+  - Usage: `uv run python scripts/simulate.py --games 100 --p1 bot-naive --p2 bot-random --p3 bot-naive --p4 bot-random`
+  - Seed support for reproducible simulations
+  - Note: Full scoring requires bidding system (planned for later)
 
 ### V3 - Simple Frontend
 - Web UI implementation (React/Next.js).
