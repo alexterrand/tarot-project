@@ -1,0 +1,5 @@
+# Card images directory
+# Place 78 WebP card images here following the naming convention:
+# - suits: clubs_1.webp to clubs_14.webp (and same for diamonds, hearts, spades)
+# - trumps: trump_1.webp to trump_21.webp
+# - excuse: excuse.webp
