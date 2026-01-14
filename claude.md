@@ -162,16 +162,88 @@ This project is a full implementation of the French Tarot card game (4-player ru
 - ✅ **Game Context**: usePolling hook, GameProvider with full state management
 - ✅ **Responsive Design**: Tailwind CSS with gradient backgrounds, shadows, animations
 
-### V4 - Live
+### V4 - Deep Reinforcement Learning 🚀 IN PROGRESS
+**Goal:** Train a PPO agent to achieve 70% win rate vs bot-naive
+
+**Phase 1: Foundation** ✅ COMPLETED
+- ✅ State encoder: 506-dim feature vector (hand, legal moves, trick context, game context)
+- ✅ Card encoder: One-hot encoding for 78 Tarot cards
+- ✅ Gymnasium environment: Single RL agent vs 3 fixed bots (Stable-Baselines3 compatible)
+- ✅ Training infrastructure: PPO with SB3, vectorized environments, Tensorboard logging
+- ✅ Evaluation suite: Win rate tracking (overall, as taker, as defense)
+
+**Architecture:**
+- **Algorithm**: PPO (Proximal Policy Optimization) via Stable-Baselines3
+- **Training**: 1 RL agent (player_0) vs 3 opponent bots (bot-naive, bot-random, or frozen snapshots)
+- **State space**: 506 dimensions (hand, legal moves, trick, context)
+- **Action space**: Discrete(78) with legal move masking
+- **Reward**: Sparse (+1 win, 0 loss) or Dense (score-based)
+- **Parallel training**: 8 vectorized environments (SubprocVecEnv)
+
+**Usage:**
+```bash
+# Test environment
+uv run python scripts/test_env.py
+
+# Train agent (500K timesteps, 8 parallel envs)
+uv run python scripts/train_rl.py --opponent bot-naive --timesteps 500000
+
+# Monitor training
+tensorboard --logdir runs/
+
+# Evaluate trained model
+uv run python scripts/evaluate_rl.py --model models/ppo_tarot_v1.zip --opponent bot-naive --episodes 100
+```
+
+**Files:**
+- `backend/rl/card_encoder.py` - One-hot encoding
+- `backend/rl/state_encoder.py` - 506-dim state representation
+- `backend/rl/tarot_env.py` - Gymnasium environment
+- `backend/rl/config.py` - Hyperparameters
+- `backend/scripts/train_rl.py` - Training script
+- `backend/scripts/evaluate_rl.py` - Evaluation script
+- `backend/RL_README.md` - Complete documentation
+
+**Status: ✅ Phase 2 Complete - First Training Successful**
+
+**Training Results (500K timesteps):**
+- Algorithm: MaskablePPO with action masking
+- Win rate: 40-45% vs bot-naive (baseline: 33%)
+- Episode length: 18 steps (full games)
+- Training time: ~3 minutes (2759 FPS, 8 parallel envs)
+- Best result: 50% win rate at 350K and 480K timesteps
+
+**What Works:**
+- ✅ Action masking prevents illegal moves
+- ✅ Agent learns to play cards (18 tricks)
+- ✅ Sparse rewards (+1 win, 0 loss)
+- ✅ Full games played correctly
+
+**Current Limitations:**
+- ❌ Agent does NOT learn bidding (uses fixed "point-based" strategy)
+- ❌ Agent does NOT learn dog discard (uses fixed "max-points" strategy)
+- ⚠️ High variance in evaluation (±0.49)
+
+**Next Steps:**
+- Phase 2.1: Longer training (1M-2M timesteps) for convergence
+- Phase 2.2: Hyperparameter tuning (learning rate schedule, entropy)
+- Phase 3: Curriculum learning (vs bot-random → bot-naive → RL snapshots)
+- Phase 4: Transformer architecture (target: 70% win rate)
+- V5: Add bidding & dog discard to action space
+
+**Documentation:**
+- [backend/RL_README.md](backend/RL_README.md) - Complete guide
+- [backend/V4_TRAINING_RESULTS.md](backend/V4_TRAINING_RESULTS.md) - Training results & commands
+
+### V5 - Live
 - Online multiplayer capabilities.
 - Lobby system to play with other humans.
 
-### V5 - Global Improvements
+### V6 - Global Improvements
 - 3 and 5 player variants (King call).
 - New game modes (Sandbox, Tournament).
-- Audio/Music integration.
+- Audio/Music/Animations integration.
 
-### V6 - Deep Reinforcement Learning
-- Training an agent using Deep Reinforcement Learning based on collected data.
+
   
 
